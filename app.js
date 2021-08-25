@@ -1,8 +1,10 @@
 let canvas = document.querySelector('canvas');
 let ctx = canvas.getContext('2d');
+let keys = [];
 
 canvas.width = 800
 canvas.height = 600
+
 
 class Box {
     constructor(x, y, w, h, color){
@@ -23,6 +25,14 @@ player1 = new Box(10, 550, 50, 50, 'blue')
 //Skapar spelets loop
 setInterval(gameLoop, 1)
 
+window.addEventListener("keydown", (e) => {
+    keys[e.keyCode] = true;
+})
+
+window.addEventListener("keyup", (e) => {
+    delete keys[e.keyCode];
+})
+
 function gameLoop(){
     player1.draw()
     move()
@@ -31,6 +41,27 @@ function gameLoop(){
 
 function move(){
     
+    
+    if (player1.y > 0) {
+        if (keys[87]) {
+            player1.y -= 1;
+        }
+    }
+    if (player1.y < (canvas.height - 50)) {
+        if (keys[83]) {
+            player1.y += 1;
+        }
+    }
+    if (player1.x < (canvas.width - 50)) {
+        if (keys[68]) {
+            player1.x += 1;
+        }
+    }
+   if (player1.x > 0) {
+        if (keys[65]) {
+            player1.x -= 1;
+        }
+    }
 }
 
 function checkWalls(){
